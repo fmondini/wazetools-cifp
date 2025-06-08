@@ -14,6 +14,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
+import java.util.Locale;
 
 import org.json.JSONObject;
 
@@ -46,8 +48,28 @@ public class FeedLastCheck {
 			jsonFile.close();
 
 		} catch (Exception e) {
-			System.err.println("LastCheck.setDate(): " + e.toString());
+			System.err.println("FeedLastCheck.Update(): " + e.toString());
 		}
+	}
+
+	/**
+	 * Time since last get
+	 */
+	public static String getTime() {
+
+		String Result = "No Date/Time Set";
+
+		try {
+			Result = FmtTool.TimeBetween(
+				FmtTool.scnDateTimeSqlStyle(_get_refresh_file_content().getString("date")),
+				new Date(),
+				Locale.ITALY
+			);
+		} catch (Exception e) {
+			System.err.println("FeedLastCheck.getDate(): " + e.toString());
+		}
+
+		return(Result);
 	}
 
 	/**
@@ -60,7 +82,7 @@ public class FeedLastCheck {
 		try {
 			Result = FmtTool.fmtDateTime(FmtTool.scnDateTimeSqlStyle(_get_refresh_file_content().getString("date")));
 		} catch (Exception e) {
-			System.err.println("LastCheck.getDate(): " + e.toString());
+			System.err.println("FeedLastCheck.getDate(): " + e.toString());
 		}
 
 		return(Result);
@@ -76,7 +98,7 @@ public class FeedLastCheck {
 		try {
 			Result = _get_refresh_file_content().getString("user");
 		} catch (Exception e) {
-			System.err.println("LastCheck.getUser(): " + e.toString());
+			System.err.println("FeedLastCheck.getUser(): " + e.toString());
 		}
 
 		return(Result);
@@ -92,7 +114,7 @@ public class FeedLastCheck {
 		try {
 			Result = _get_refresh_file_content().getString("addr");
 		} catch (Exception e) {
-			System.err.println("LastCheck.getAddr(): " + e.toString());
+			System.err.println("FeedLastCheck.getAddr(): " + e.toString());
 		}
 
 		return(Result);

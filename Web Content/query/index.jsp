@@ -111,7 +111,8 @@
 		</div>
 
 		<div class="DS-padding-bottom-16px" align="center">
-			<div class="DS-text-italic DS-text-LightSlateGrey">Last feed refresh from Waze: <b><%= FeedLastCheck.getDate() %></b> by <b><%= FeedLastCheck.getUser() %></b> from <b><%= FeedLastCheck.getAddr() %></b></div>
+			<div class="DS-text-italic DS-text-LightSlateGrey">Connection usually occurs every <b>5</b> minutes, and it's been <b><%= FeedLastCheck.getTime() %></b> since the last feed refresh from Waze.</div>
+			<div class="DS-text-small DS-text-italic DS-text-LightSlateGrey">The last GET happened at <b><%= FeedLastCheck.getDate() %></b> by <b><%= FeedLastCheck.getUser() %></b> from <b><%= FeedLastCheck.getAddr() %></b></div>
 		</div>
 <%
 	} catch (Exception e) {
