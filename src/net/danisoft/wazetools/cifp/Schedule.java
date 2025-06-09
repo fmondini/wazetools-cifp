@@ -10,8 +10,14 @@
 
 package net.danisoft.wazetools.cifp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import net.danisoft.dslib.FmtTool;
 
 /**
  * Class to hold Schedule data
@@ -91,6 +97,66 @@ public class Schedule {
 		}
 
 		return(jaResult);
+	}
+
+	/**
+	 * Get slot start and stop dates if this schedule is active NOW
+	 * 
+	 * @return A Date[] array of 2 elements containing:<ul>
+	 * 	<li>If Date/Time match<br>
+	 * 		Element 0: Date Start<br>
+	 * 		Element 1: Date End</li>
+	 * 	<li>If Date/Time DO NOT match<br>
+	 * 		Element 0: null<br>
+	 * 		Element 1: null</li>
+	 * </ul>
+	 */
+	public static Date[] getActiveSlotPeriod(Group.Data grpData) {
+
+		int startValue, endValue, nowValue;
+		String nowDow, closureTime[], closureSpan[], startTime[], endTime[], nowTime[];
+
+		Date[] slotDates = new Date[] { null, null };
+
+		try {
+
+			Date currentDate = new Date();
+			// [TEST ONLY] Date currentDate = FmtTool.scnDateTimeSqlStyle("2025-06-12 14:00:00");
+
+			JSONObject jSchedule = grpData.getSchedule();
+
+			nowDow = new SimpleDateFormat("EEE", Locale.ROOT).format(currentDate).toLowerCase();
+			nowTime = FmtTool.fmtTimeNoSecs(currentDate).split(":");
+			nowValue = (Integer.parseInt(nowTime[0]) * 60) + Integer.parseInt(nowTime[1]);
+
+			// Closures Array
+
+			if (jSchedule.toString().contains(","))
+				closureTime = jSchedule.getString(nowDow).split(",");
+			else
+				closureTime = new String[] { jSchedule.getString(nowDow) };
+
+			// Check if there is a slot that matches the current date and time
+
+			for (String time : closureTime) {
+
+				closureSpan = time.split("-");
+
+				startTime = closureSpan[0].split(":");
+				startValue = (Integer.parseInt(startTime[0]) * 60) + Integer.parseInt(startTime[1]);
+
+				endTime = closureSpan[1].split(":");
+				endValue = (Integer.parseInt(endTime[0]) * 60) + Integer.parseInt(endTime[1]);
+
+				if (startValue <= nowValue && endValue >= nowValue) {
+					slotDates[0] = FmtTool.scnDateTimeSqlStyle(FmtTool.fmtDateSqlStyle(currentDate) + " " + closureSpan[0] + ":00");
+					slotDates[1] = FmtTool.scnDateTimeSqlStyle(FmtTool.fmtDateSqlStyle(currentDate) + " " + closureSpan[1] + ":59");
+				}
+			}
+
+		} catch (Exception e) { }
+
+		return(slotDates);
 	}
 
 }
