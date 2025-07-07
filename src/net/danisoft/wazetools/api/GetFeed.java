@@ -391,10 +391,10 @@ public class GetFeed extends HttpServlet {
 			}
 
 		} else {
-			
+
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			out.println(jFeed.toString(3));
+			out.write(jFeed.toString(3).getBytes("UTF-8")); // Was "out.println(jFeed.toString(3));" but had a problem with utf-8 chars
 			out.flush();
 		}
 
