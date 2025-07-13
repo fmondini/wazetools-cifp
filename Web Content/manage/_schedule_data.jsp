@@ -27,17 +27,24 @@
 			<table class="TableSpacing_0px DS-full-width">
 
 				<tr class="DS-border-full DS-back-darkgray">
-					<td class="DS-padding-4px" ColSpan="5">
-						<div class="DS-text-big">Schedule Table</div>
-					</td>
-					<td class="DS-padding-4px" ColSpan="5" align="right">
-						<table class="TableSpacing_0px DS-text-blue DS-cursor-pointer" title="Refresh table from database" onClick="ReadSchedule('<%= gidData.getID() %>');">
-							<tr class="DS-padding-top-8px">
-								<td class="DS-padding-top-4px">
-									<span class="material-icons">refresh</span>
-								</td>
-							</tr>
-						</table>
+					<td class="DS-padding-4px" ColSpan="10">
+						<div class="mdc-layout-grid__inner">
+							<div class="<%= MdcTool.Layout.Cell(4, 2, 1) %> DS-grid-middle-left">
+								<%= IcoTool.Symbol.RndExtn("schedule", false, "32px", "DarkGreen", null, null) %>
+								<span class="DS-text-big DS-padding-lf-4px">Schedule Table</span>
+							</div>
+							<div class="<%= MdcTool.Layout.Cell(7, 4, 2) %> DS-grid-middle-center">
+								<%= IcoTool.Symbol.RndExtn("event_busy", false, "24px", "FireBrick", "onClick=\"CleanSchedule('" + gidData.getID() + "');\"", "Clean ALL scheduler data") %>
+								<span class="DS-text-FireBrick DS-padding-rg16px">Clean</span>
+								<%= IcoTool.Symbol.RndExtn("date_range", false, "24px", "CornflowerBlue", "onClick=\"MondayToWorkDays('" + gidData.getID() + "');\"", "Copy Monday data to Work Days (Tue-Fri)") %>
+								<span class="DS-text-CornflowerBlue DS-padding-rg16px">WorkDays</span>
+								<%= IcoTool.Symbol.RndExtn("calendar_month", false, "24px", "SteelBlue", "onClick=\"MondayToWeekDays('" + gidData.getID() + "');\"", "Copy Monday data to All Week Days (Tue-Sun)") %>
+								<span class="DS-text-SteelBlue">WeekDays</span>
+							</div>
+							<div class="<%= MdcTool.Layout.Cell(1, 2, 1) %> DS-grid-middle-right">
+								<%= IcoTool.Symbol.RndExtn("refresh", false, "32px", "RoyalBlue", "onClick=\"ReadSchedule('" + gidData.getID() + "');\"", "Refresh scheduler table from database") %>
+							</div>
+						</div>
 					</td>
 				</tr>
 
@@ -75,8 +82,8 @@
 					</tr>
 				<% } %>
 
-				<tr id="trDelSchedError" class="DS-hidden DS-border-full">
-					<td class="DS-padding-4px" ColSpan="10" align="center">
+				<tr id="trDelSchedError" class="DS-hidden DS-border-full DS-back-pastel-red">
+					<td class="DS-padding-4px DS-text-large" ColSpan="10" align="center">
 						<div id="divDelSchedError"></div>
 					</td>
 				</tr>

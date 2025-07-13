@@ -343,12 +343,11 @@
 				complete: function(jqXHR, textStatus) {
 					ReadStatus(GidID);
 				}
-
 			});
 		}
 
 		/**
-		 * Delete Existing Schedule Data
+		 * Delete a Schedule Entry
 		 */
 		function DelSchedule(GidID, abbrDay, timeMin, timeMax) {
 
@@ -386,7 +385,125 @@
 					ReadStatus(GidID);
 				}
 			});
+		}
 
+		/**
+		 * Clean All Schedule Data
+		 */
+		function CleanSchedule(GidID) {
+
+			$.ajax({
+
+				cache: false,
+				type: 'POST',
+				url: '../servlet/schedClean',
+
+				data: {
+					gid: GidID
+				},
+
+				success: function(data) {
+					if (data.status == 'OK') {
+						ReadSchedule(GidID);
+					} else {
+						$('#divDelSchedError').css('color', 'FireBrick');
+						$('#divDelSchedError').html(data.error);
+						$('#trDelSchedError').show().delay(5000).fadeOut(1000);
+					}
+				},
+
+				error: function (jqXHR, textStatus, errorThrown) {
+					var errText = 'Error ' + jqXHR.status + ' deleting schedule - Report to SysOp';
+					console.error(errText + ' - ' + errorThrown);
+					$('#divDelSchedError').css('color', 'FireBrick');
+					$('#divDelSchedError').html(errText);
+					$('#trDelSchedError').show().delay(3000).fadeOut(1000);
+				},
+
+				complete: function(jqXHR, textStatus) {
+					ReadStatus(GidID);
+				}
+			});
+		}
+
+		/**
+		 * Monday Schedule Data to WorkDays
+		 */
+		function MondayToWorkDays(GidID) {
+
+			$.ajax({
+
+				cache: false,
+				type: 'POST',
+				url: '../servlet/schedDuplicateMonday',
+
+				data: {
+					gid: GidID,
+					ext: 'WD' // WorkDays only
+				},
+
+				success: function(data) {
+					if (data.status == 'OK') {
+						ReadSchedule(GidID);
+					} else {
+						$('#divDelSchedError').css('color', 'FireBrick');
+						$('#divDelSchedError').html(data.error);
+						$('#trDelSchedError').show().delay(5000).fadeOut(1000);
+					}
+				},
+
+				error: function (jqXHR, textStatus, errorThrown) {
+					var errText = 'Error ' + jqXHR.status + ' copying schedule - Report to SysOp';
+					console.error(errText + ' - ' + errorThrown);
+					$('#divDelSchedError').css('color', 'FireBrick');
+					$('#divDelSchedError').html(errText);
+					$('#trDelSchedError').show().delay(3000).fadeOut(1000);
+				},
+
+				complete: function(jqXHR, textStatus) {
+					ReadStatus(GidID);
+				}
+			});
+		}
+
+		/**
+		 * Monday Schedule Data to WeekDays
+		 */
+		function MondayToWeekDays(GidID) {
+
+			$.ajax({
+
+				cache: false,
+				type: 'POST',
+				url: '../servlet/schedDuplicateMonday',
+
+				data: {
+					gid: GidID,
+					ext: 'AW' // All Weekdays
+				},
+
+				success: function(data) {
+					if (data.status == 'OK') {
+						ReadSchedule(GidID);
+					} else {
+						$('#divDelSchedError').css('color', 'FireBrick');
+						$('#divDelSchedError').html(data.error);
+						$('#trDelSchedError').show().delay(5000).fadeOut(1000);
+					}
+				},
+
+				error: function (jqXHR, textStatus, errorThrown) {
+					var errText = 'Error ' + jqXHR.status + ' copying schedule - Report to SysOp';
+					console.error(errText + ' - ' + errorThrown);
+					$('#divDelSchedError').css('color', 'FireBrick');
+					$('#divDelSchedError').html(errText);
+					$('#trDelSchedError').show().delay(3000).fadeOut(1000);
+				},
+
+				complete: function(jqXHR, textStatus) {
+					ReadStatus(GidID);
+				}
+			});
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -141,6 +141,23 @@ public class Group {
 		}
 
 		/**
+		 * Check if Monday schedule is empty
+		 */
+		public boolean isMondayScheduleEmpty() {
+
+			boolean rc = false;
+
+			try {
+				getSchedule().getString(Schedule.DayNameAbbr[0]);
+			} catch (Exception e) {
+				System.err.println(e.toString());
+				rc = true;
+			}
+
+			return(rc);
+		}
+
+		/**
 		 * Get Schedule for XML feed (with long day names)
 		 * @return Vector<String> of Schedule.DayNameFull[i].toLowerCase() + SysTool.getDelimiter() + daySchedule
 		 */

@@ -25,17 +25,16 @@
 			<table class="TableSpacing_0px DS-full-width">
 
 				<tr class="DS-border-full DS-back-darkgray">
-					<td class="DS-padding-4px" ColSpan="2">
-						<div class="DS-text-big">Closure Period</div>
-					</td>
-					<td class="DS-padding-4px" ColSpan="2" align="right">
-						<table class="TableSpacing_0px DS-text-blue DS-cursor-pointer" title="Refresh table from database" onClick="ReadPeriod('<%= gidData.getID() %>');">
-							<tr class="DS-padding-top-8px">
-								<td class="DS-padding-top-4px" ColSpan="2">
-									<span class="material-icons">refresh</span>
-								</td>
-							</tr>
-						</table>
+					<td class="DS-padding-4px" ColSpan="4">
+						<div class="mdc-layout-grid__inner">
+							<div class="<%= MdcTool.Layout.Cell(6, 4, 2) %> DS-grid-middle-left">
+								<%= IcoTool.Symbol.RndExtn("event_note", false, "32px", "DarkGreen", null, null) %>
+								<span class="DS-text-big DS-padding-lf-4px">Closure Period</span>
+							</div>
+							<div class="<%= MdcTool.Layout.Cell(6, 4, 2) %> DS-grid-middle-right">
+								<%= IcoTool.Symbol.RndExtn("refresh", false, "32px", "RoyalBlue", "onClick=\"ReadPeriod('" + gidData.getID() + "');\"", "Refresh period table from database") %>
+							</div>
+						</div>
 					</td>
 				</tr>
 
